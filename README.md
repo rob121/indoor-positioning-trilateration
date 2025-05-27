@@ -62,6 +62,44 @@ Start the system by powering up the ESP32-S3 boards and the target BLE device. E
 Figure: Sequence diagram/flow of the solution
 </p>
 
+### Beacon Install
+
+After attaching the board to your computer find the device id on linux or macosx run
+
+```
+ls /dev/ | grep "usb"
+```
+
+You'll get something like this:
+
+```
+cu.usbmodem595B0709031
+cu.wchusbserial595B0709031
+tty.usbmodem595B0709031
+tty.wchusbserial595B0709031
+```
+
+You'll need to source circuit python and install to the board using something like esptool
+
+```
+ esptool.py --port /dev/cu.wchusbserial595B0709031 erase_flash1
+```
+
+Install the bin file for the board
+
+```
+esptool.py --port /dev/cu.wchusbserial595B0709031 write_flash -z 0 /Users/ralfonso/Downloads/adafruit-circuitpython-yd_esp32_s3_n16r8-en_US-9.2.7.bin
+```
+
+Then you need to copy the code using mpremote 
+
+```
+mpremote /dev/cu.wchusbseraial123456 fs cp -r /local/dir :
+```
+
+The above will copy /local/dir to the root :
+
+
 ## Future Enhancements
 - Integration of additional beacons to improve coverage and accuracy.
 - Exploration of alternative technologies such as Zigbee and Wi-Fi.
